@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: directgrabber-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/assets/sessions:/app/assets/sessions
+      - ./backend/storage/downloads:/app/storage/downloads
+      - ./backend/directgrabber.db:/app/directgrabber.db
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:////app/directgrabber.db
+    networks:
+      - directgrabber-net
+
+  frontend:
+    image: node:20-alpine
+    container_name: directgrabber-frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npm run dev -- --host"
+    depends_on:
+      - backend
+    networks:
+      - directgrabber-net
+
+networks:
+  directgrabber-net:
+    driver: bridge
