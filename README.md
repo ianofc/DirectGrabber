@@ -171,6 +171,21 @@ DirectGrabber/
 
 ### Opção 1: Execução Local
 
+Após instalar as dependências do backend e do frontend, você pode iniciar os
+dois serviços com um único comando na raiz do repositório:
+
+```bash
+./start-local.sh
+```
+
+Mantenha esse terminal aberto enquanto estiver usando a aplicação. O script
+expõe a API em `http://localhost:8000` e o painel em
+`http://localhost:5173`, ambos vinculados a `0.0.0.0` para acesso pelo
+navegador local ou por encaminhamento de portas do ambiente de desenvolvimento.
+
+Se o navegador informar `ERR_CONNECTION_REFUSED`, confirme que o comando acima
+ainda está em execução e abra a URL exibida pelo Vite no terminal.
+
 #### 1. Pré-requisitos
 - **Python 3.11+**
 - **Node.js 18+** e **npm**
